@@ -1,37 +1,69 @@
-# Odoo
+# Odoo 19 Community — Source Code Project
 
-[![Build Status](https://runbot.odoo.com/runbot/badge/flat/1/master.svg)](https://runbot.odoo.com/runbot)
-[![Tech Doc](https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=8F8F8F)](https://www.odoo.com/documentation/master)
-[![Help](https://img.shields.io/badge/master-help-875A7B.svg?style=flat&colorA=8F8F8F)](https://www.odoo.com/forum/help-1)
-[![Nightly Builds](https://img.shields.io/badge/master-nightly-875A7B.svg?style=flat&colorA=8F8F8F)](https://nightly.odoo.com/)
+Summary
+- Odoo 19 Community source included in `./odoo` (branch `19`).
+- Third-party education module: `openeducat_erp` (git submodule) found at `./extra-addons/openeducat_erp` — https://github.com/openeducat/openeducat_erp (https://openeducat.org).
+- Odoo developer tutorials are available in `./tutorials` (see Odoo docs: https://www.odoo.com/documentation/19.0/developer/tutorials/setup_guide.html).
 
-Odoo is a suite of web based open source business apps.
+Repository layout (important paths)
+- `odoo/` — Odoo 19 community source (branch `19` expected)
+- `addons/` — local custom/additional addons
+- `extra-addons/openeducat_erp/` — git submodule for OpenEduCat ERP
+- `tutorials/` — Odoo tutorial modules
+- `config/` — configuration files (e.g., `odoo-cmd.conf`)
+- `.devcontainer/odoo/` — development container setup and helper scripts
 
-The main Odoo Apps include an [Open Source CRM](https://www.odoo.com/page/crm),
-[Website Builder](https://www.odoo.com/app/website),
-[eCommerce](https://www.odoo.com/app/ecommerce),
-[Warehouse Management](https://www.odoo.com/app/inventory),
-[Project Management](https://www.odoo.com/app/project),
-[Billing &amp; Accounting](https://www.odoo.com/app/accounting),
-[Point of Sale](https://www.odoo.com/app/point-of-sale-shop),
-[Human Resources](https://www.odoo.com/app/employees),
-[Marketing](https://www.odoo.com/app/social-marketing),
-[Manufacturing](https://www.odoo.com/app/manufacturing),
-[...](https://www.odoo.com/)
+Quick start (developer)
+1. Clone including submodules:
+```
+ git clone --recurse-submodules <repo-url>
+ # or, if already cloned:
+ git submodule update --init --recursive
+```
 
-Odoo Apps can be used as stand-alone applications, but they also integrate seamlessly so you get
-a full-featured [Open Source ERP](https://www.odoo.com) when you install several Apps.
+2. Prepare Postgres (example dev container setup uses `postgres-dev`):
+```
+# copy SQL and apply (example)
+docker cp ./.devcontainer/odoo/setup.sql postgres-dev:/tmp/odoo-setup.sql
+docker exec -it postgres-dev psql -U postgres -d postgres -f /tmp/odoo-setup.sql
 
-## Getting started with Odoo
+# check postgres readiness
+pg_isready -d odoo19dev -h postgres-dev -p 5432 -U odoo_user
+```
 
-For a standard installation please follow the [Setup instructions](https://www.odoo.com/documentation/master/administration/install/install.html)
-from the documentation.
+3. Start Odoo (first-time initialisation):
+```
+./odoo-bin -i all --addons-path=./addons/,./extra-addons/openeducat/,./tutorials/    --database=odoo19dev --db_user=odoo_user --db_password=<your_password> --dev=all
+```
 
-To learn the software, we recommend the [Odoo eLearning](https://www.odoo.com/slides),
-or [Scale-up, the business game](https://www.odoo.com/page/scale-up-business-game).
-Developers can start with [the developer tutorials](https://www.odoo.com/documentation/master/developer/howtos.html).
+Or to update modules while using config:
+```
+./odoo-bin -u all -c ./config/odoo-cmd.conf --dev=all
+```
 
-## Security
+4. Kill port if Odoo gets stuck:
+```
+sudo lsof -i :8069
+sudo kill -9 <PID>
+fuser -n tcp -k 8069
+```
 
-If you believe you have found a security issue, check our [Responsible Disclosure page](https://www.odoo.com/security-report)
-for details and get in touch with us via email.
+Submodule notes
+- `openeducat_erp` is a git submodule; update with:
+```
+git submodule update --remote extra-addons/openeducat_erp
+git add extra-addons/openeducat_erp && git commit -m "Update openeducat_erp submodule"
+```
+
+Security & configuration
+- Avoid committing secrets. Use environment variables or a `.env` and secure config management for DB credentials.
+- Verify Postgres version compatibility (use recommended Postgres for Odoo 19).
+
+Contributing & next steps
+- Add `CONTRIBUTING.md` and specify Python/Postgres versions and formatting/lint rules.
+- Consider adding `docker-compose` or simple setup scripts for reproducible dev environments.
+
+Links
+- Odoo: https://github.com/odoo/odoo (branch 19)
+- OpenEduCat: https://github.com/openeducat/openeducat_erp
+- Tutorials: https://www.odoo.com/documentation/19.0/developer/tutorials/setup_guide.html
