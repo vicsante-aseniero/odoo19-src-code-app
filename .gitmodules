@@ -1,6 +1,7 @@
-[submodule "extra_addons/openeducat_erp"]
-	path = extra_addons/openeducat_erp
-	url = https://github.com/openeducat/openeducat_erp.git
 [submodule "tutorials"]
 	path = tutorials
 	url = https://github.com/vicsante-aseniero/tutorials.git
+[submodule "extra-addons/openeducat"]
+	path = extra-addons/openeducat
+	url = https://github.com/openeducat/openeducat_erp.git
+	branch = 19.0
