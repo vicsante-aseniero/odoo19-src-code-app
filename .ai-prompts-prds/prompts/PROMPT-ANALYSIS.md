@@ -12,3 +12,6 @@ Assistant Response Template:
 
 Storage:
 - Append new analysis requests/responses here for later reference.
+
+Changelog:
+- 2025-12-14: Added Changelog section and owners guidance.

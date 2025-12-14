@@ -17,6 +17,11 @@ Important behaviors & flows
 - Addon loading: ensure the `--addons-path` includes `addons`, `extra-addons/`, and `tutorials`.
 
 Notable findings & risks
+- **Risk severity & owners:**
+  - DB credentials appear in example commands — **Severity:** Medium; **Owner:** Maintainers.
+  - Submodule usage requires explicit updates — **Severity:** Low; **Owner:** DevOps/Maintainers.
+  - No pinned Python/Postgres versions — **Severity:** Medium; **Owner:** Maintainers.
+
 - DB credentials appear in example commands—must avoid storing real credentials in repo.
 - Submodule usage requires maintainers to update explicitly; this can lead to drift if not automated.
 - No explicit `requirements.txt` or pinned Python/Postgres versions in repository root—document recommended versions.
@@ -28,10 +33,10 @@ Recommendations
 - Move secrets out of docs and into `.env` + README example, and update `.gitignore`.
 
 Suggested next tasks (prioritized)
-1. Add `CONTRIBUTING.md` and `docker-compose` for dev environment reproducibility.
-2. Add CI to run linting and basic startup checks.
-3. Add automated submodule monitoring or a maintenance workflow for `openeducat_erp`.
-4. Document exact Python and Postgres versions and test them.
+1. Add `CONTRIBUTING.md` and `docker-compose` for dev environment reproducibility. **Owner:** Maintainers/DevOps.
+2. Add CI to run linting and basic startup checks. **Owner:** DevOps/CI.
+3. Add automated submodule monitoring or a maintenance workflow for `openeducat_erp`. **Owner:** Maintainers.
+4. Document exact Python and Postgres versions and test them. **Owner:** Maintainers.
 
 Appendix
 - Dev notes are available in `.devcontainer/odoo/instruction.txt` (run commands, `pg_isready`, etc.)

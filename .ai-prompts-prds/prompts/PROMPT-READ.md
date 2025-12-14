@@ -13,3 +13,6 @@ Assistant Response Template:
 
 Storage:
 - This file is intended to store README-related prompt/response templates and future Q/A history about README changes.
+
+Changelog:
+- 2025-12-14: Added Changelog section and README/.env guidance.

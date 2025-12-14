@@ -67,3 +67,21 @@ Links
 - Odoo: https://github.com/odoo/odoo (branch 19)
 - OpenEduCat: https://github.com/openeducat/openeducat_erp
 - Tutorials: https://www.odoo.com/documentation/19.0/developer/tutorials/setup_guide.html
+
+
+Recommended environment
+- **Python:** 3.11 (tested)
+- **PostgreSQL:** 13 or 14 (recommended)
+
+Example .env (do not commit)
+```
+ODOO_DB_USER=odoo_user
+ODOO_DB_PASSWORD=change_me
+ODOO_DB_HOST=postgres-dev
+ODOO_DB_PORT=5432
+ODOO_DB_NAME=odoo19dev
+PYTHON_VERSION=3.11
+```
+
+Contributing
+- See `CONTRIBUTING.md` for contribution guidelines (Python/Postgres versions, linting, tests).
